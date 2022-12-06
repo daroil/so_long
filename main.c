@@ -6,7 +6,7 @@
 /*   By: dhendzel <dhendzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 15:31:17 by dhendzel          #+#    #+#             */
-/*   Updated: 2022/12/05 18:46:45 by dhendzel         ###   ########.fr       */
+/*   Updated: 2022/12/06 15:44:45 by dhendzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,17 @@
 
 struct g_structure
 {
-	mlx_image_t		*g_img;
+	mlx_image_t		*hero;
 	mlx_image_t		*g_exit_img;
 	mlx_t			*mlx;
 	mlx_texture_t	*texture;
 	mlx_texture_t	*crate_texture;
+	mlx_texture_t	*floor_texture;
 	mlx_texture_t	*exit_texture;
 	mlx_image_t		*crate;
+	mlx_image_t		*floor;
+	int				hero_x;
+	int				hero_y;
 };
 
 struct g_structure g_struct;
@@ -51,10 +55,10 @@ void	*ft_memset(void *s, int c, size_t len)
 
 int	hit_an_exit(int x, int y)
 {
-	if (g_struct.g_img->instances->x <= x 
-		&& g_struct.g_img->instances->x >= x - 14  
-		&& g_struct.g_img->instances->y <= y
-		&& g_struct.g_img->instances->y >= y - 21)
+	if (g_struct.hero->instances->x <= x 
+		&& g_struct.hero->instances->x >= x - 14  
+		&& g_struct.hero->instances->y <= y
+		&& g_struct.hero->instances->y >= y - 21)
 		return (1);
 	return (0);
 }
@@ -66,18 +70,17 @@ void	hook(void *param)
 	mlx = param;
 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(mlx);
-	if ((mlx_is_key_down(mlx, MLX_KEY_UP) || mlx_is_key_down(mlx, MLX_KEY_W))
-		&& g_struct.g_img->instances->y > 200)
-		g_struct.g_img->instances->y -= 5;
-	if ((mlx_is_key_down(mlx, MLX_KEY_DOWN) || mlx_is_key_down(mlx, MLX_KEY_S))
-		&& g_struct.g_img->instances->y < 680)
-		g_struct.g_img->instances->y += 5;
-	if ((mlx_is_key_down(mlx, MLX_KEY_LEFT) || mlx_is_key_down(mlx, MLX_KEY_A))
-		&& g_struct.g_img->instances->x > 200)
-		g_struct.g_img->instances->x -= 5;
-	if ((mlx_is_key_down(mlx, MLX_KEY_RIGHT) || mlx_is_key_down(mlx, MLX_KEY_D))
-		&& g_struct.g_img->instances->x < 410)
-		g_struct.g_img->instances->x += 5;
+	if ((mlx_is_key_down(mlx, MLX_KEY_UP) || mlx_is_key_down(mlx, MLX_KEY_W)))
+		g_struct.hero->instances->y -= 5;
+	if ((mlx_is_key_down(mlx, MLX_KEY_DOWN) || mlx_is_key_down(mlx, MLX_KEY_S)))
+		g_struct.hero->instances->y += 5;
+	if ((mlx_is_key_down(mlx, MLX_KEY_LEFT) || mlx_is_key_down(mlx, MLX_KEY_A)))
+		g_struct.hero->instances->x -= 5;
+	if ((mlx_is_key_down(mlx, MLX_KEY_RIGHT) || mlx_is_key_down(mlx, MLX_KEY_D)))
+		g_struct.hero->instances->x += 5;
+	if (g_struct.hero->instances->x == g_struct.crate->instances->x && g_struct.hero->instances->y == g_struct.crate->instances->y)
+		g_struct.hero->instances->x -= 5;
+		
 	if (hit_an_exit(g_struct.g_exit_img->instances->x, g_struct.g_exit_img->instances->y))
 	{
 		write(1, "GAMEOVER", 8);
@@ -96,7 +99,7 @@ void	ft_initialise_map(void)
 	
 	ft_printf("%s",line);
 	width = ft_strlen(line) * 32;
-	height = 1;
+	height = 0;
 	while(line)
 	{
 		line = get_next_line(fd);
@@ -115,10 +118,21 @@ void	ft_render_chars(char *line, int y)
 	while(*line)
 	{
 		if(*line == '1')
-		{
 			mlx_image_to_window(g_struct.mlx, g_struct.crate, x, y);
-			x += 32;
-		}
+		if(*line == '0')
+			mlx_image_to_window(g_struct.mlx, g_struct.floor, x, y);
+		if(*line == 'P')
+		{
+			mlx_image_to_window(g_struct.mlx, g_struct.floor, x, y);
+			g_struct.hero_x = x;
+			g_struct.hero_y = y;
+		}	
+		if(*line == 'E')
+		{
+			mlx_image_to_window(g_struct.mlx, g_struct.floor, x, y);
+			mlx_image_to_window(g_struct.mlx, g_struct.g_exit_img, x, y);
+		}	
+		x += 32;
 		line++;	
 	}
 }
@@ -135,7 +149,6 @@ void	ft_render_map(void)
 	if(line != NULL)
 		ft_render_chars(line, y);
 	ft_printf("%s",line);
-
 	while(line)
 	{
 		line = get_next_line(fd);
@@ -144,8 +157,8 @@ void	ft_render_map(void)
 			ft_render_chars(line, y);
 		ft_printf("%s",line);		
 	}
+	mlx_image_to_window(g_struct.mlx, g_struct.hero, g_struct.hero_x, g_struct.hero_y);
 	close(fd);
-	
 }
 
 
@@ -153,18 +166,17 @@ int32_t	main()
 {
 	g_struct.texture = mlx_load_png("/Users/dhendzel/Documents/Pixel_Crawler/Heroes/Knight/Idle/Knight.png");
 	g_struct.crate_texture = mlx_load_png("assets/crate.png");
+	g_struct.floor_texture = mlx_load_png("assets/floor.png");
 	g_struct.exit_texture = mlx_load_png("/Users/dhendzel/Documents/Pixel_Crawler/Environment/Dungeon_Prison/Assets/exit.png");
 	g_struct.mlx = NULL;
 	ft_initialise_map();
 	if (!g_struct.mlx)
 		exit(EXIT_FAILURE);
 	g_struct.crate = mlx_texture_to_image(g_struct.mlx, g_struct.crate_texture);
-	g_struct.g_img = mlx_texture_to_image(g_struct.mlx, g_struct.texture);
+	g_struct.floor = mlx_texture_to_image(g_struct.mlx, g_struct.floor_texture);
+	g_struct.hero = mlx_texture_to_image(g_struct.mlx, g_struct.texture);
 	g_struct.g_exit_img = mlx_texture_to_image(g_struct.mlx, g_struct.exit_texture);
 	ft_render_map();
-	
-	mlx_image_to_window(g_struct.mlx, g_struct.g_img, 300, 300);
-	mlx_image_to_window(g_struct.mlx, g_struct.g_exit_img, 350, 420);
 	mlx_loop_hook(g_struct.mlx, &hook, g_struct.mlx);
 	mlx_loop(g_struct.mlx);
 	mlx_terminate(g_struct.mlx);
