@@ -6,15 +6,27 @@
 /*   By: dhendzel <dhendzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 15:31:17 by dhendzel          #+#    #+#             */
-/*   Updated: 2022/12/06 15:44:45 by dhendzel         ###   ########.fr       */
+/*   Updated: 2022/12/08 17:34:15 by dhendzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
+typedef struct tile_s
+{
+	int	x;
+	int y;
+} tile_t;
+
+typedef struct hero_s
+{
+	mlx_image_t	*hero;
+	tile_t		hero_tile;
+} hero_t;
+
 struct g_structure
 {
-	mlx_image_t		*hero;
+	// mlx_image_t		*hero;
 	mlx_image_t		*g_exit_img;
 	mlx_t			*mlx;
 	mlx_texture_t	*texture;
@@ -23,11 +35,15 @@ struct g_structure
 	mlx_texture_t	*exit_texture;
 	mlx_image_t		*crate;
 	mlx_image_t		*floor;
-	int				hero_x;
-	int				hero_y;
+	// int				hero_x;
+	// int				hero_y;
+	hero_t			hero;
+	char			**map;
 };
 
 struct g_structure g_struct;
+
+void ft_render_map(void);
 
 void	*ft_memset(void *s, int c, size_t len)
 {
@@ -46,21 +62,70 @@ void	*ft_memset(void *s, int c, size_t len)
 	return (s1);
 }
 
-// int	hit_any_obstacle(int *x, int *y)
-// {
-// 	putstr(x);
-// 	putstr(y);
-// 	return(0);	
-// }
-
 int	hit_an_exit(int x, int y)
 {
-	if (g_struct.hero->instances->x <= x 
-		&& g_struct.hero->instances->x >= x - 14  
-		&& g_struct.hero->instances->y <= y
-		&& g_struct.hero->instances->y >= y - 21)
+	if (g_struct.hero.hero->instances->x <= x 
+		&& g_struct.hero.hero->instances->x >= x - 32  
+		&& g_struct.hero.hero->instances->y <= y
+		&& g_struct.hero.hero->instances->y >= y - 32)
 		return (1);
 	return (0);
+}
+
+void	ft_go_up(mlx_key_data_t keydata, void *param)
+{
+	param = (void*)param;
+	if (keydata.action == MLX_RELEASE)
+	{
+		if(g_struct.map[g_struct.hero.hero_tile.y/32-1][g_struct.hero.hero_tile.x/32] != '1')
+		{	
+			mlx_image_to_window(g_struct.mlx, g_struct.floor, g_struct.hero.hero_tile.x, g_struct.hero.hero_tile.y);
+			g_struct.hero.hero_tile.y -= 32;
+			mlx_image_to_window(g_struct.mlx, g_struct.hero.hero, g_struct.hero.hero_tile.x, g_struct.hero.hero_tile.y);
+		}
+	}
+}
+
+void	ft_go_down(mlx_key_data_t keydata, void *param)
+{
+	param = (void*)param;
+	if (keydata.action == MLX_RELEASE)
+	{
+		if(g_struct.map[g_struct.hero.hero_tile.y/32+1][g_struct.hero.hero_tile.x/32] != '1')
+		{	
+			mlx_image_to_window(g_struct.mlx, g_struct.floor, g_struct.hero.hero_tile.x, g_struct.hero.hero_tile.y);
+			g_struct.hero.hero_tile.y += 32;
+			mlx_image_to_window(g_struct.mlx, g_struct.hero.hero, g_struct.hero.hero_tile.x, g_struct.hero.hero_tile.y);
+		}
+	}
+}
+
+void	ft_go_left(mlx_key_data_t keydata, void *param)
+{
+	param = (void*)param;
+	if (keydata.action == MLX_RELEASE)
+	{
+		if(g_struct.map[g_struct.hero.hero_tile.y/32][g_struct.hero.hero_tile.x/32-1] != '1')
+		{	
+			mlx_image_to_window(g_struct.mlx, g_struct.floor, g_struct.hero.hero_tile.x, g_struct.hero.hero_tile.y);
+			g_struct.hero.hero_tile.x -= 32;
+			mlx_image_to_window(g_struct.mlx, g_struct.hero.hero, g_struct.hero.hero_tile.x, g_struct.hero.hero_tile.y);
+		}
+	}
+}
+
+void	ft_go_right(mlx_key_data_t keydata, void *param)
+{
+	param = (void*)param;
+	if (keydata.action == MLX_RELEASE)
+	{
+		if(g_struct.map[g_struct.hero.hero_tile.y/32][g_struct.hero.hero_tile.x/32+1] != '1')
+		{	
+			mlx_image_to_window(g_struct.mlx, g_struct.floor, g_struct.hero.hero_tile.x, g_struct.hero.hero_tile.y);
+			g_struct.hero.hero_tile.x += 32;
+			mlx_image_to_window(g_struct.mlx, g_struct.hero.hero, g_struct.hero.hero_tile.x, g_struct.hero.hero_tile.y);
+		}
+	}
 }
 
 void	hook(void *param)
@@ -68,19 +133,18 @@ void	hook(void *param)
 	mlx_t	*mlx;
 
 	mlx = param;
+	// ft_render_map();
 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(mlx);
 	if ((mlx_is_key_down(mlx, MLX_KEY_UP) || mlx_is_key_down(mlx, MLX_KEY_W)))
-		g_struct.hero->instances->y -= 5;
+		// if(MLX_RELEASE)
+			mlx_key_hook(g_struct.mlx, ft_go_up, param);
 	if ((mlx_is_key_down(mlx, MLX_KEY_DOWN) || mlx_is_key_down(mlx, MLX_KEY_S)))
-		g_struct.hero->instances->y += 5;
+		mlx_key_hook(g_struct.mlx, ft_go_down, param);
 	if ((mlx_is_key_down(mlx, MLX_KEY_LEFT) || mlx_is_key_down(mlx, MLX_KEY_A)))
-		g_struct.hero->instances->x -= 5;
+		mlx_key_hook(g_struct.mlx, ft_go_left, param);
 	if ((mlx_is_key_down(mlx, MLX_KEY_RIGHT) || mlx_is_key_down(mlx, MLX_KEY_D)))
-		g_struct.hero->instances->x += 5;
-	if (g_struct.hero->instances->x == g_struct.crate->instances->x && g_struct.hero->instances->y == g_struct.crate->instances->y)
-		g_struct.hero->instances->x -= 5;
-		
+		mlx_key_hook(g_struct.mlx, ft_go_right, param);
 	if (hit_an_exit(g_struct.g_exit_img->instances->x, g_struct.g_exit_img->instances->y))
 	{
 		write(1, "GAMEOVER", 8);
@@ -88,27 +152,27 @@ void	hook(void *param)
 	}
 }
 
-void	ft_initialise_map(void)
-{
-	int	fd;
-	int width;
-	int height;
-	char *line;
-	fd = open("maps/map1.ber",'r');
-	line = get_next_line(fd);
+// void	ft_initialise_map(void)
+// {
+// 	int	fd;
+// 	int width;
+// 	int height;
+// 	char *line;
+// 	fd = open("maps/map1.ber",'r');
+// 	line = get_next_line(fd);
 	
-	ft_printf("%s",line);
-	width = ft_strlen(line) * 32;
-	height = 0;
-	while(line)
-	{
-		line = get_next_line(fd);
-		ft_printf("%s",line);
-		height++;		
-	}
-	g_struct.mlx = mlx_init(width - 32, height * 32, "GAMEBOY", true);
-	close(fd);
-}
+// 	// ft_printf("%s",line);
+// 	width = ft_strlen(line) * 32;
+// 	height = 0;
+// 	while(line)
+// 	{
+// 		line = get_next_line(fd);
+// 		// ft_printf("%s",line);
+// 		height++;		
+// 	}
+// 	close(fd);
+// 	g_struct.mlx = mlx_init(width - 32, height * 32, "GAMEBOY", true);
+// }
 
 void	ft_render_chars(char *line, int y)
 {
@@ -124,41 +188,132 @@ void	ft_render_chars(char *line, int y)
 		if(*line == 'P')
 		{
 			mlx_image_to_window(g_struct.mlx, g_struct.floor, x, y);
-			g_struct.hero_x = x;
-			g_struct.hero_y = y;
-		}	
+			g_struct.hero.hero_tile.x = x;
+			g_struct.hero.hero_tile.y = y;
+			// g_struct.hero_y = y;
+		}
 		if(*line == 'E')
 		{
 			mlx_image_to_window(g_struct.mlx, g_struct.floor, x, y);
 			mlx_image_to_window(g_struct.mlx, g_struct.g_exit_img, x, y);
 		}	
 		x += 32;
+		ft_printf("%c",*line);
 		line++;	
 	}
 }
 
+// void	ft_render_map(void)
+// {
+// 	int		fd;
+// 	char	*line;
+// 	int		y;
+	
+// 	y = 0;
+// 	fd = open("maps/map1.ber",'r');
+// 	line = get_next_line(fd);
+// 	if(line != NULL)
+// 		ft_render_chars(line, y);
+// 	ft_printf("%s",line);
+// 	while(line)
+// 	{
+// 		line = get_next_line(fd);
+// 		y += 32;
+// 		if(line != NULL)
+// 			ft_render_chars(line, y);
+// 		ft_printf("%s",line);		
+// 	}
+// 	close(fd);
+// 	mlx_image_to_window(g_struct.mlx, g_struct.hero.hero, g_struct.hero.hero_tile.x, g_struct.hero.hero_tile.y);
+// }
+
 void	ft_render_map(void)
 {
-	int		fd;
-	char	*line;
+	// char	*line;
 	int		y;
+	int		x;
 	
+	x = 0;
 	y = 0;
+	ft_printf("\n");
+	while(g_struct.map[x])
+	{
+		if(g_struct.map[x] != NULL)
+			ft_render_chars(g_struct.map[x], y);	
+		y += 32;
+		x++;
+	}
+	mlx_image_to_window(g_struct.mlx, g_struct.hero.hero, g_struct.hero.hero_tile.x, g_struct.hero.hero_tile.y);
+	
+}
+
+void	ft_create_array(void)
+{
+
+	int		fd;
+	int		width;
+	int		line_width;
+	int		height;
+	char	*line;
+	int		i;
+	
 	fd = open("maps/map1.ber",'r');
 	line = get_next_line(fd);
-	if(line != NULL)
-		ft_render_chars(line, y);
-	ft_printf("%s",line);
+	width = ft_strlen(line);
+	ft_printf("%d\n",width);
+	height = 0;
+	g_struct.map = malloc(sizeof(char*) * width + 1);
+	if(!g_struct.map)
+		free(g_struct.map);
+	i = 0;
 	while(line)
 	{
-		line = get_next_line(fd);
-		y += 32;
+		line_width = ft_strlen(line);
+		g_struct.map[i] = malloc(sizeof(char) * line_width);
+		if(!g_struct.map[i])
+			free(g_struct.map[i]);
 		if(line != NULL)
-			ft_render_chars(line, y);
-		ft_printf("%s",line);		
+			g_struct.map[i] = ft_strdup(line);
+		// g_struct.map[i][line_width] = '\0';
+		line = get_next_line(fd);
+		height++;
+		i++;		
 	}
-	mlx_image_to_window(g_struct.mlx, g_struct.hero, g_struct.hero_x, g_struct.hero_y);
 	close(fd);
+	g_struct.map[height] = NULL;
+	// i = 0;
+	// while(g_struct.map[i])
+	// {
+	// 	g_struct.map[i] = malloc(sizeof(char) * height);
+	// 	if(!g_struct.map[i])
+	// 	{
+	// 		free(g_struct.map);
+	// 	}
+	// 	g_struct.map[i][height] = '\0';
+	// 	i++;
+	// }
+	// i = 0;
+	// fd = open("maps/map1.ber",'r');
+	// line = get_next_line(fd);
+	// while(i < height)
+	// {
+	// 	if(line != NULL)
+	// 		g_struct.map[i] = ft_strdup(line);
+	// 	i++;
+	// 	line = get_next_line(fd);
+	// }
+	// i = 0;
+	// while(g_struct.map[i])
+	// {
+	// 	ft_printf("%s",g_struct.map[i]);
+	// 	i++;
+	// }
+	
+	// ft_printf("%s",g_struct.map[i]);
+	// close(fd);
+	// ft_printf("%c\n",g_struct.map[1][1]);
+	g_struct.mlx = mlx_init(width * 32 - 32, height * 32, "GAMEBOY", true);
+	
 }
 
 
@@ -169,19 +324,17 @@ int32_t	main()
 	g_struct.floor_texture = mlx_load_png("assets/floor.png");
 	g_struct.exit_texture = mlx_load_png("/Users/dhendzel/Documents/Pixel_Crawler/Environment/Dungeon_Prison/Assets/exit.png");
 	g_struct.mlx = NULL;
-	ft_initialise_map();
+	ft_create_array();
+	// ft_initialise_map();
 	if (!g_struct.mlx)
 		exit(EXIT_FAILURE);
 	g_struct.crate = mlx_texture_to_image(g_struct.mlx, g_struct.crate_texture);
 	g_struct.floor = mlx_texture_to_image(g_struct.mlx, g_struct.floor_texture);
-	g_struct.hero = mlx_texture_to_image(g_struct.mlx, g_struct.texture);
+	g_struct.hero.hero = mlx_texture_to_image(g_struct.mlx, g_struct.texture);
 	g_struct.g_exit_img = mlx_texture_to_image(g_struct.mlx, g_struct.exit_texture);
 	ft_render_map();
 	mlx_loop_hook(g_struct.mlx, &hook, g_struct.mlx);
 	mlx_loop(g_struct.mlx);
 	mlx_terminate(g_struct.mlx);
 	return (EXIT_SUCCESS);
-}
-
-
-		
+}		
