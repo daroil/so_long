@@ -6,12 +6,12 @@
 #    By: dhendzel <dhendzel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/01 15:26:49 by dhendzel          #+#    #+#              #
-#    Updated: 2022/12/05 17:15:37 by dhendzel         ###   ########.fr        #
+#    Updated: 2022/12/15 23:32:43 by dhendzel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
-SRCS = main.c get_next_line_utils.c get_next_line.c
+SRCS = main.c get_next_line_utils.c get_next_line.c movement.c movement_2.c make_map.c map_check.c map_check_2.c game_checks.c
 
 NAME =  game
 OBJ	= $(SRCS:.c=.o)

@@ -6,44 +6,36 @@
 /*   By: dhendzel <dhendzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 16:26:58 by dhendzel          #+#    #+#             */
-/*   Updated: 2022/12/15 16:59:12 by dhendzel         ###   ########.fr       */
+/*   Updated: 2022/12/15 23:32:28 by dhendzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-#include "MLX42/include/MLX42/MLX42.h"
-#include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <memory.h>
-#include <fcntl.h>
-#include "get_next_line.h"
-#include "ft_printf/ft_printf.h"
-#include "libft_2/libft.h"
+# include "MLX42/include/MLX42/MLX42.h"
+# include <stdlib.h>
+# include <stdio.h>
+# include <unistd.h>
+# include <memory.h>
+# include <fcntl.h>
+# include "get_next_line.h"
+# include "ft_printf/ft_printf.h"
+# include "libft_2/libft.h"
 
-#ifndef STEP
-int STEP = 32;
-#endif
-
-typedef struct tile_s
-{
-	int	x;
-	int y;
-} tile_t;
+# ifndef STEP
+#  define STEP 32
+# endif
 
 typedef struct hero_s
 {
 	mlx_image_t	*hero;
-	int	x;
-	int y;
-	tile_t		hero_tile;
-} hero_t;
+	int			x;
+	int			y;
+}	t_hero;
 
-struct g_structure
+typedef struct game_s
 {
-	// mlx_image_t		*hero;
 	mlx_image_t		*g_exit_img;
 	mlx_t			*mlx;
 	mlx_texture_t	*texture;
@@ -55,9 +47,7 @@ struct g_structure
 	mlx_image_t		*crate;
 	mlx_image_t		*floor;
 	mlx_image_t		*collectible;
-	// int				hero_x;
-	// int				hero_y;
-	hero_t			hero;
+	t_hero			hero;
 	char			**map;
 	char			**visited;
 	int				width;
@@ -66,16 +56,36 @@ struct g_structure
 	int				exit_open;
 	int				collected;
 	int				all_collectibles;
-};
+}	t_game;
 
-void	ft_render_map(struct g_structure *g_struct);
-int		hit_an_exit(int x, int y,struct g_structure *g_struct);
+void	ft_render_map(t_game *g_struct);
+int		hit_an_exit(int x, int y, t_game *g_struct);
 void	ft_go_up(mlx_key_data_t keydata, void *param);
 void	ft_go_down(mlx_key_data_t keydata, void *param);
 void	ft_go_left(mlx_key_data_t keydata, void *param);
 void	ft_go_right(mlx_key_data_t keydata, void *param);
 void	hook(void *param);
-void	ft_render_chars(char *line, int y,struct g_structure *g_struct);
-void	ft_create_array(char *path,struct g_structure *g_struct);
+void	ft_render_chars(char *line, int y, t_game *g_struct);
+void	ft_create_array(char *path, t_game *g_struct);
+int		ft_count_height(char *path);
+int		is_at_exit(int x, int y, t_game *g_struct);
+void	free_map(t_game *g_struct);
+int		check_if_all(t_game *g_struct);
+void	ft_initialise_graphics(t_game *g_struct);
+int		ft_check_coll_exit(char **visited);
+void	ft_get_player_pos(char **map, t_game *g_struct);
+int		ft_wrong_symbols(char **map);
+int		ft_check_map(char *path, t_game *g_struct);
+int		ft_count_collectibles(char **map);
+size_t	ft_strlen_nonl(const char *s);
+int		ft_is_rectangular(char **map);
+int		ft_check_last(char **map, int i);
+int		ft_map_closed_walls(char **map);
+void	ft_copy_array(char *path, t_game *g_struct);
+void	dfs(t_game *g_struct, int y, int x);
+void	ft_move_up(t_game *g_struct, int x, int y);
+void	ft_move_down(t_game *g_struct, int x, int y);
+void	ft_move_left(t_game *g_struct, int x, int y);
+void	ft_move_right(t_game *g_struct, int x, int y);
 
 #endif
