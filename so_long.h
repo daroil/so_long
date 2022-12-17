@@ -6,7 +6,7 @@
 /*   By: dhendzel <dhendzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 16:26:58 by dhendzel          #+#    #+#             */
-/*   Updated: 2022/12/17 12:56:54 by dhendzel         ###   ########.fr       */
+/*   Updated: 2022/12/17 13:40:39 by dhendzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,6 @@ void	ft_move_down(t_game *g_struct, int x, int y);
 void	ft_move_left(t_game *g_struct, int x, int y);
 void	ft_move_right(t_game *g_struct, int x, int y);
 int		player_check(char **map);
+int		coll_check_wrong(char **map);
 
 #endif

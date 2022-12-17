@@ -6,7 +6,7 @@
 /*   By: dhendzel <dhendzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 22:15:36 by dhendzel          #+#    #+#             */
-/*   Updated: 2022/12/17 12:31:39 by dhendzel         ###   ########.fr       */
+/*   Updated: 2022/12/17 13:40:32 by dhendzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,28 @@ int	player_check(char **map)
 	if (count != 1)
 		return (0);
 	return (1);
+}
+
+int	coll_check_wrong(char **map)
+{
+	int	i;
+	int	j;
+	int	count;
+
+	i = 0;
+	count = 0;
+	while (map[i])
+	{
+		j = 0;
+		while (map[i][j])
+		{
+			if (map[i][j] == 'C')
+				count++;
+			j++;
+		}
+		i++;
+	}
+	if (count <= 0)
+		return (1);
+	return (0);
 }
