@@ -6,7 +6,7 @@
 /*   By: dhendzel <dhendzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 15:31:17 by dhendzel          #+#    #+#             */
-/*   Updated: 2022/12/17 13:02:58 by dhendzel         ###   ########.fr       */
+/*   Updated: 2022/12/17 14:01:51 by dhendzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int32_t	main(int argc, char **argv)
 	if (argc != 2)
 	{
 		ft_printf("Error\nIncorrect input, my dear, try again!\n");
-		ft_printf("Correct input is ./game 'relative map path'\n");
+		ft_printf("Correct input is ./so_long 'relative map path'\n");
 		return (EXIT_FAILURE);
 	}
 	ft_create_array(argv[1], &g_struct);
