@@ -6,7 +6,7 @@
 /*   By: dhendzel <dhendzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 16:26:58 by dhendzel          #+#    #+#             */
-/*   Updated: 2022/12/17 12:51:55 by dhendzel         ###   ########.fr       */
+/*   Updated: 2022/12/17 12:56:54 by dhendzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <unistd.h>
 # include <memory.h>
 # include <fcntl.h>
-# include "get_next_line.h"
+# include "lib/gnl/get_next_line.h"
 # include "lib/printf/ft_printf.h"
 # include "lib/libft/libft.h"
 
