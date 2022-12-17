@@ -6,7 +6,7 @@
 /*   By: dhendzel <dhendzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 22:15:36 by dhendzel          #+#    #+#             */
-/*   Updated: 2022/12/15 23:29:50 by dhendzel         ###   ########.fr       */
+/*   Updated: 2022/12/17 12:31:39 by dhendzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,28 @@ void	free_map(t_game *g_struct)
 		i++;
 	}
 	free (g_struct->map);
+}
+
+int	player_check(char **map)
+{
+	int	i;
+	int	j;
+	int	count;
+
+	i = 0;
+	count = 0;
+	while (map[i])
+	{
+		j = 0;
+		while (map[i][j])
+		{
+			if (map[i][j] == 'P')
+				count++;
+			j++;
+		}
+		i++;
+	}
+	if (count != 1)
+		return (0);
+	return (1);
 }

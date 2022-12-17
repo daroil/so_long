@@ -6,7 +6,7 @@
 /*   By: dhendzel <dhendzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 22:08:03 by dhendzel          #+#    #+#             */
-/*   Updated: 2022/12/15 23:30:07 by dhendzel         ###   ########.fr       */
+/*   Updated: 2022/12/17 12:28:53 by dhendzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,14 @@ int	ft_check_map(char *path, t_game *g_struct)
 	{
 		if (ft_map_closed_walls(g_struct->map))
 		{
-			ft_copy_array(path, g_struct);
-			ft_get_player_pos(g_struct->map, g_struct);
-			dfs(g_struct, g_struct->hero.y, g_struct->hero.x);
-			if (ft_check_coll_exit(g_struct->visited))
-				return (1);
+			if (player_check(g_struct->map))
+			{	
+				ft_copy_array(path, g_struct);
+				ft_get_player_pos(g_struct->map, g_struct);
+				dfs(g_struct, g_struct->hero.y, g_struct->hero.x);
+				if (ft_check_coll_exit(g_struct->visited))
+					return (1);
+			}
 		}
 	}
 	return (0);

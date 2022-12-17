@@ -6,7 +6,7 @@
 /*   By: dhendzel <dhendzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 15:31:17 by dhendzel          #+#    #+#             */
-/*   Updated: 2022/12/15 23:34:59 by dhendzel         ###   ########.fr       */
+/*   Updated: 2022/12/16 11:54:52 by dhendzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int32_t	main(int argc, char **argv)
 
 	if (argc != 2)
 	{
-		ft_printf("Incorrect input, my dear, try again!\n");
+		ft_printf("Error\nIncorrect input, my dear, try again!\n");
 		ft_printf("Correct input is ./game 'relative map path'\n");
 		return (EXIT_FAILURE);
 	}
