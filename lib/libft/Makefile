@@ -6,7 +6,7 @@
 #    By: dhendzel <dhendzel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/16 15:18:30 by dhendzel          #+#    #+#              #
-#    Updated: 2022/12/17 12:44:12 by dhendzel         ###   ########.fr        #
+#    Updated: 2022/12/17 13:08:13 by dhendzel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,10 @@ bonus: $(BONUS_OBJ)
 clean:
 	rm -f $(OBJ) $(BONUS_OBJ)
 
+norm:
+	norminette $(SRCS) $(BONUS)
+
 fclean: clean
 	rm -f $(NAME)
 
-re: fclean all
+re: fclean clean all bonus norm

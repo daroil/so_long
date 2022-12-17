@@ -6,7 +6,7 @@
 #    By: dhendzel <dhendzel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/17 17:53:59 by dhendzel          #+#    #+#              #
-#    Updated: 2022/11/11 05:53:13 by dhendzel         ###   ########.fr        #
+#    Updated: 2022/12/17 13:07:53 by dhendzel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,10 @@ clean:
 
 fclean: clean
 	rm -f $(NAME)
+	
+norm:
+	norminette $(SRCS)
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re norm

@@ -6,7 +6,7 @@
 #    By: dhendzel <dhendzel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/01 15:26:49 by dhendzel          #+#    #+#              #
-#    Updated: 2022/12/17 12:58:27 by dhendzel         ###   ########.fr        #
+#    Updated: 2022/12/17 13:08:40 by dhendzel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,6 +56,9 @@ re: fclean all
 
 norm:
 	norminette $(SRCS)
+	@$(MAKE) -C $(LIBFT) norm
+	@$(MAKE) -C $(PRINTF) norm
+	@$(MAKE) -C $(GNL) norm
 	
 install:
 	brew update
