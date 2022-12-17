@@ -6,7 +6,7 @@
 #    By: dhendzel <dhendzel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/01 15:26:49 by dhendzel          #+#    #+#              #
-#    Updated: 2022/12/17 12:43:27 by dhendzel         ###   ########.fr        #
+#    Updated: 2022/12/17 12:52:15 by dhendzel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,9 +16,9 @@ SRCS = main.c get_next_line_utils.c get_next_line.c movement.c movement_2.c make
 NAME =  so_long
 OBJ	= $(SRCS:.c=.o)
 CFLAGS = -Wall -Werror -Wextra
-LIBMLX	:= ./MLX42
-LIBFT	:= ./libft_2
-PRINTF	:= ./ft_printf
+LIBMLX	:= ./lib/MLX42
+LIBFT	:= ./lib/libft
+PRINTF	:= ./lib/printf
 
 all: libmlx libft printf $(NAME)
 
@@ -32,7 +32,7 @@ printf:
 	@$(MAKE) -C $(PRINTF)
 
 $(NAME): $(OBJ)
-	$(CC) $(OBJ) MLX42/libmlx42.a ft_printf/libftprintf.a libft_2/libft.a -I include -lglfw -L "/Users/$(USER)/.brew/opt/glfw/lib/" -o $(NAME)
+	$(CC) $(OBJ) $(LIBMLX)/libmlx42.a $(PRINTF)/libftprintf.a $(LIBFT)/libft.a -I include -lglfw -L "/Users/$(USER)/.brew/opt/glfw/lib/" -o $(NAME)
 
 clean:
 	rm -f $(OBJ)

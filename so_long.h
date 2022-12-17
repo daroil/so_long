@@ -6,22 +6,22 @@
 /*   By: dhendzel <dhendzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 16:26:58 by dhendzel          #+#    #+#             */
-/*   Updated: 2022/12/17 12:29:35 by dhendzel         ###   ########.fr       */
+/*   Updated: 2022/12/17 12:51:55 by dhendzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-# include "MLX42/include/MLX42/MLX42.h"
+# include "lib/MLX42/include/MLX42/MLX42.h"
 # include <stdlib.h>
 # include <stdio.h>
 # include <unistd.h>
 # include <memory.h>
 # include <fcntl.h>
 # include "get_next_line.h"
-# include "ft_printf/ft_printf.h"
-# include "libft_2/libft.h"
+# include "lib/printf/ft_printf.h"
+# include "lib/libft/libft.h"
 
 # ifndef STEP
 #  define STEP 32
