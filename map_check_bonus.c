@@ -6,7 +6,7 @@
 /*   By: dhendzel <dhendzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 22:05:23 by dhendzel          #+#    #+#             */
-/*   Updated: 2022/12/19 15:40:32 by dhendzel         ###   ########.fr       */
+/*   Updated: 2022/12/19 21:14:59 by dhendzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	ft_is_rectangular(char **map)
 	int	i;
 
 	i = 1;
-	while (map[i])
+	while (map[i] && map[i - 1])
 	{
 		if (ft_strlen_nonl(map[i]) != ft_strlen_nonl(map[i - 1]))
 			return (0);
