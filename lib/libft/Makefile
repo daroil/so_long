@@ -28,7 +28,7 @@ OBJ	= $(SRCS:.c=.o)
 BONUS_OBJ = $(BONUS:.c=.o)
 CFLAGS = -Wall -Werror -Wextra -I.
 
-all: $(NAME) bonus
+all: $(NAME)
 
 $(NAME): $(OBJ)
 	ar rcs $(NAME) $(OBJ) 

@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.h                                          :+:      :+:    :+:   */
+/*   so_long_bonus.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dhendzel <dhendzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 16:26:58 by dhendzel          #+#    #+#             */
-/*   Updated: 2022/12/19 19:35:34 by dhendzel         ###   ########.fr       */
+/*   Updated: 2022/12/19 19:40:13 by dhendzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_H
-# define SO_LONG_H
+#ifndef SO_LONG_BONUS_H
+# define SO_LONG_BONUS_H
 
 # include "lib/MLX42/include/MLX42/MLX42.h"
 # include <stdlib.h>
@@ -29,7 +29,10 @@
 
 typedef struct hero_s
 {
-	mlx_image_t	*hero;
+	mlx_image_t	*hero_front;
+	mlx_image_t	*hero_back;
+	mlx_image_t	*hero_right;
+	mlx_image_t	*hero_left;
 	int			x;
 	int			y;
 }	t_hero;
@@ -38,7 +41,11 @@ typedef struct game_s
 {
 	mlx_image_t		*g_exit_img;
 	mlx_t			*mlx;
-	mlx_texture_t	*texture;
+	mlx_texture_t	*texture_back;
+	mlx_texture_t	*texture_front;
+	mlx_texture_t	*texture_right;
+	mlx_texture_t	*texture_left;
+	mlx_texture_t	*enemy_texture;
 	mlx_texture_t	*crate_texture;
 	mlx_texture_t	*floor_texture;
 	mlx_texture_t	*col_texture;
@@ -47,6 +54,7 @@ typedef struct game_s
 	mlx_image_t		*crate;
 	mlx_image_t		*floor;
 	mlx_image_t		*collectible;
+	mlx_image_t		*enemy;
 	t_hero			hero;
 	char			**map;
 	char			**visited;
@@ -89,6 +97,8 @@ void	ft_move_left(t_game *g_struct, int x, int y);
 void	ft_move_right(t_game *g_struct, int x, int y);
 int		player_check(char **map);
 int		coll_check_wrong(char **map);
+void	initialise(t_game *g_struct);
+void	free_map(t_game *g_struct);
 void	free_map1(t_game *g_struct);
 void	start_game(t_game *g_struct);
 void	set_structure(t_game *g_struct);

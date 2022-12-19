@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dhendzel <dhendzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 15:31:17 by dhendzel          #+#    #+#             */
-/*   Updated: 2022/12/19 19:36:56 by dhendzel         ###   ########.fr       */
+/*   Updated: 2022/12/19 20:05:30 by dhendzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
 void	hook(void *param)
 {
@@ -42,16 +42,20 @@ void	dfs(t_game *g_struct, int y, int x)
 {
 	g_struct->visited[y][x] = '2';
 	if (g_struct->visited[y][x + 1] != '2'
-		&& g_struct->visited[y][x + 1] != '1')
+		&& g_struct->visited[y][x + 1] != '1'
+		&& g_struct->visited[y][x + 1] != 'D')
 		dfs(g_struct, y, x + 1);
 	if (g_struct->visited[y + 1][x] != '2'
-		&& g_struct->visited[y + 1][x] != '1')
+		&& g_struct->visited[y + 1][x] != '1'
+		&& g_struct->visited[y + 1][x] != 'D')
 		dfs(g_struct, y + 1, x);
 	if (g_struct->visited[y][x - 1] != '2'
-		&& g_struct->visited[y][x - 1] != '1')
+		&& g_struct->visited[y][x - 1] != '1'
+		&& g_struct->visited[y][x - 1] != 'D')
 		dfs(g_struct, y, x - 1);
 	if (g_struct->visited[y - 1][x] != '2'
-		&& g_struct->visited[y - 1][x] != '1')
+		&& g_struct->visited[y - 1][x] != '1'
+		&& g_struct->visited[y - 1][x] != 'D')
 		dfs(g_struct, y - 1, x);
 }
 
@@ -91,6 +95,7 @@ int32_t	main(int argc, char **argv)
 	{
 		ft_printf("Error\nIncorrect input, my dear, try again!\n");
 		ft_printf("Correct input is ./so_long 'relative map path'\n");
+		ft_printf("map should end in .ber\n");
 		return (EXIT_FAILURE);
 	}
 	ft_create_array(argv[1], &g_struct);
@@ -104,7 +109,8 @@ int32_t	main(int argc, char **argv)
 	return (EXIT_SUCCESS);
 }
 
-// void	chck_leaks() {
-// 	system("leaks so_long");
+// void	chck_leaks() 
+// {
+// 	system("leaks so_long_bonus");
 // }
 // atexit(chck_leaks);
