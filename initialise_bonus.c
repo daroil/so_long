@@ -6,11 +6,28 @@
 /*   By: dhendzel <dhendzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 14:41:46 by dhendzel          #+#    #+#             */
-/*   Updated: 2022/12/20 15:46:40 by dhendzel         ###   ########.fr       */
+/*   Updated: 2022/12/20 16:29:08 by dhendzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long_bonus.h"
+
+void	ft_initialise_graphics(t_game *g_struct)
+{
+	g_struct->mlx = mlx_init(g_struct->width * STEP - STEP,
+			g_struct->height * STEP, "GAMEBOY", true);
+	g_struct->texture_back = mlx_load_png("assets/hero_back.png");
+	g_struct->texture_front = mlx_load_png("assets/hero_front.png");
+	g_struct->texture_left = mlx_load_png("assets/hero_left.png");
+	g_struct->texture_right = mlx_load_png("assets/hero_right.png");
+	g_struct->crate_texture = mlx_load_png("assets/crate.png");
+	g_struct->floor_texture = mlx_load_png("assets/floor.png");
+	g_struct->exit_texture = mlx_load_png("assets/closed_exit.png");
+	g_struct->open_exit_texture = mlx_load_png("assets/open_exit.png");
+	g_struct->col_texture = mlx_load_png("assets/coin.png");
+	g_struct->enemy_texture = mlx_load_png("assets/Knight.png");
+	initialise(g_struct);
+}
 
 void	initialise(t_game *g_struct)
 {

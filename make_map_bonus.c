@@ -6,7 +6,7 @@
 /*   By: dhendzel <dhendzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 22:02:33 by dhendzel          #+#    #+#             */
-/*   Updated: 2022/12/20 15:34:19 by dhendzel         ###   ########.fr       */
+/*   Updated: 2022/12/20 16:29:00 by dhendzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,21 +102,4 @@ void	ft_create_array(char *path, t_game *g_struct)
 	g_struct->map[g_struct->height] = NULL;
 	g_struct->initialised = 0;
 	g_struct->enemy_count = 0;
-}
-
-void	ft_initialise_graphics(t_game *g_struct)
-{
-	g_struct->mlx = mlx_init(g_struct->width * STEP - STEP,
-			g_struct->height * STEP, "GAMEBOY", true);
-	g_struct->texture_back = mlx_load_png("assets/hero_back.png");
-	g_struct->texture_front = mlx_load_png("assets/hero_front.png");
-	g_struct->texture_left = mlx_load_png("assets/hero_left.png");
-	g_struct->texture_right = mlx_load_png("assets/hero_right.png");
-	g_struct->crate_texture = mlx_load_png("assets/crate.png");
-	g_struct->floor_texture = mlx_load_png("assets/floor.png");
-	g_struct->exit_texture = mlx_load_png("assets/closed_exit.png");
-	g_struct->open_exit_texture = mlx_load_png("assets/open_exit.png");
-	g_struct->col_texture = mlx_load_png("assets/coin.png");
-	g_struct->enemy_texture = mlx_load_png("assets/Knight.png");
-	initialise(g_struct);
 }
