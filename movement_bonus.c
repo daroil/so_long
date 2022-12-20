@@ -6,7 +6,7 @@
 /*   By: dhendzel <dhendzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 21:56:01 by dhendzel          #+#    #+#             */
-/*   Updated: 2022/12/19 15:40:36 by dhendzel         ###   ########.fr       */
+/*   Updated: 2022/12/20 15:23:34 by dhendzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	ft_go_up(mlx_key_data_t keydata, void *param)
 		if (g_struct->map[g_struct->hero.y / STEP - 1]
 			[g_struct->hero.x / STEP] != '1')
 			ft_move_up(g_struct, g_struct->hero.x, g_struct->hero.y);
+		move_enemy_up(g_struct);
 	}
 }
 
@@ -53,6 +54,7 @@ void	ft_go_down(mlx_key_data_t keydata, void *param)
 		if (g_struct->map[g_struct->hero.y / STEP + 1]
 			[g_struct->hero.x / STEP] != '1')
 			ft_move_down(g_struct, g_struct->hero.x, g_struct->hero.y);
+		move_enemy_down(g_struct);
 	}
 }
 
@@ -66,6 +68,7 @@ void	ft_go_left(mlx_key_data_t keydata, void *param)
 		if (g_struct->map[g_struct->hero.y / STEP]
 			[g_struct->hero.x / STEP - 1] != '1')
 			ft_move_left(g_struct, g_struct->hero.x, g_struct->hero.y);
+		move_enemy_left(g_struct);
 	}
 }
 
@@ -79,5 +82,6 @@ void	ft_go_right(mlx_key_data_t keydata, void *param)
 		if (g_struct->map[g_struct->hero.y / STEP]
 			[g_struct->hero.x / STEP + 1] != '1')
 			ft_move_right(g_struct, g_struct->hero.x, g_struct->hero.y);
+		move_enemy_right(g_struct);
 	}
 }

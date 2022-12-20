@@ -6,7 +6,7 @@
 /*   By: dhendzel <dhendzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 16:26:58 by dhendzel          #+#    #+#             */
-/*   Updated: 2022/12/19 19:40:13 by dhendzel         ###   ########.fr       */
+/*   Updated: 2022/12/20 15:47:11 by dhendzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,10 @@ typedef struct game_s
 	int				exit_open;
 	int				collected;
 	int				all_collectibles;
+	int				enemy_count;
+	int				**enemy_pos;
+	int				initialised;
+	int				dfs;
 }	t_game;
 
 void	ft_render_map(t_game *g_struct);
@@ -102,5 +106,20 @@ void	free_map(t_game *g_struct);
 void	free_map1(t_game *g_struct);
 void	start_game(t_game *g_struct);
 void	set_structure(t_game *g_struct);
+void	ft_set_enemy_pos(t_game *g_struct);
+int		ft_count_enemies(char **map);
+void	ft_get_enemy_pos(char **map, t_game *g_struct, int count);
+void	free_enem_pos(t_game *g_struct);
+void	ft_move_enemy_up(t_game *g_struct, int x, int y, int i);
+void	ft_move_enemy_down(t_game *g_struct, int x, int y, int i);
+void	ft_move_enemy_right(t_game *g_struct, int x, int y, int i);
+void	ft_move_enemy_left(t_game *g_struct, int x, int y, int i);
+int		enemy_is_at_exit(int x, int y, int enemy_x, int enemy_y);
+void	move_enemy_up(t_game *g_struct);
+void	move_enemy_down(t_game *g_struct);
+void	move_enemy_right(t_game *g_struct);
+void	move_enemy_left(t_game *g_struct);
+void	delete_textures(t_game *g_struct);
+void	delete_images(t_game *g_struct);
 
 #endif

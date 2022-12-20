@@ -6,7 +6,7 @@
 /*   By: dhendzel <dhendzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 22:02:33 by dhendzel          #+#    #+#             */
-/*   Updated: 2022/12/19 15:40:22 by dhendzel         ###   ########.fr       */
+/*   Updated: 2022/12/20 15:34:19 by dhendzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ void	ft_create_array(char *path, t_game *g_struct)
 	}
 	close(fd);
 	g_struct->map[g_struct->height] = NULL;
+	g_struct->initialised = 0;
+	g_struct->enemy_count = 0;
 }
 
 void	ft_initialise_graphics(t_game *g_struct)

@@ -6,7 +6,7 @@
 /*   By: dhendzel <dhendzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 15:31:17 by dhendzel          #+#    #+#             */
-/*   Updated: 2022/12/19 20:05:30 by dhendzel         ###   ########.fr       */
+/*   Updated: 2022/12/20 15:44:43 by dhendzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int32_t	main(int argc, char **argv)
 	else
 	{
 		ft_printf("Error\nThe map is invalid, my dear, try another one!\n");
-		free_map1(&g_struct);
+		free_map(&g_struct);
 	}
 	return (EXIT_SUCCESS);
 }

@@ -6,14 +6,18 @@
 #    By: dhendzel <dhendzel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/01 15:26:49 by dhendzel          #+#    #+#              #
-#    Updated: 2022/12/19 19:32:00 by dhendzel         ###   ########.fr        #
+#    Updated: 2022/12/20 15:47:23 by dhendzel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 
-SRCS = main.c initialise.c movement.c movement_2.c make_map.c map_check.c map_check_2.c game_checks.c
-BONUS_SRCS = main_bonus.c movement_bonus.c movement_2_bonus.c make_map_bonus.c map_check_bonus.c map_check_2_bonus.c game_checks_bonus.c initialise_bonus.c
+SRCS = 			main.c initialise.c movement.c movement_2.c make_map.c \
+				map_check.c map_check_2.c game_checks.c
+BONUS_SRCS = 	main_bonus.c movement_bonus.c movement_2_bonus.c make_map_bonus.c \
+				map_check_bonus.c map_check_2_bonus.c game_checks_bonus.c \
+				initialise_bonus.c enemy_handle_bonus.c enemy_movement_bonus.c \
+				enemy_movement_bonus_2.c delete_bonus.c
 
 BONUS_NAME =  so_long_bonus
 NAME =  so_long

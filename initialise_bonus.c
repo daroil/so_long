@@ -6,7 +6,7 @@
 /*   By: dhendzel <dhendzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 14:41:46 by dhendzel          #+#    #+#             */
-/*   Updated: 2022/12/19 19:40:38 by dhendzel         ###   ########.fr       */
+/*   Updated: 2022/12/20 15:46:40 by dhendzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	initialise(t_game *g_struct)
 			g_struct->exit_texture);
 	g_struct->enemy = mlx_texture_to_image(g_struct->mlx,
 			g_struct->enemy_texture);
+	g_struct->initialised = 1;
 }
 
 void	free_map1(t_game *g_struct)
@@ -48,20 +49,6 @@ void	free_map1(t_game *g_struct)
 	g_struct->map = NULL;
 }
 
-void	delete_textures(t_game *g_struct)
-{
-	mlx_delete_texture(g_struct->crate_texture);
-	mlx_delete_texture(g_struct->texture_back);
-	mlx_delete_texture(g_struct->texture_front);
-	mlx_delete_texture(g_struct->texture_right);
-	mlx_delete_texture(g_struct->texture_left);
-	mlx_delete_texture(g_struct->floor_texture);
-	mlx_delete_texture(g_struct->col_texture);
-	mlx_delete_texture(g_struct->exit_texture);
-	mlx_delete_texture(g_struct->open_exit_texture);
-	mlx_delete_texture(g_struct->enemy_texture);
-}
-
 void	start_game(t_game *g_struct)
 {
 	set_structure(g_struct);
@@ -69,6 +56,7 @@ void	start_game(t_game *g_struct)
 	if (!g_struct->mlx)
 		exit(EXIT_FAILURE);
 	ft_render_map(g_struct);
+	ft_set_enemy_pos(g_struct);
 	mlx_loop_hook(g_struct->mlx, &hook, g_struct);
 	mlx_loop(g_struct->mlx);
 	free_map(g_struct);
@@ -79,22 +67,23 @@ void	free_map(t_game *g_struct)
 {
 	int	i;
 
+	if (g_struct->enemy_count)
+		free_enem_pos(g_struct);
 	free_map1(g_struct);
 	i = 0;
-	while (g_struct->visited[i])
-	{
-		free (g_struct->visited[i]);
-		i++;
+	if (g_struct->dfs)
+	{	
+		while (g_struct->visited[i])
+		{
+			free (g_struct->visited[i]);
+			i++;
+		}
+		free (g_struct->visited);
+		g_struct->visited = NULL;
 	}
-	free (g_struct->visited);
-	g_struct->visited = NULL;
-	delete_textures(g_struct);
-	mlx_delete_image(g_struct->mlx, g_struct->crate);
-	mlx_delete_image(g_struct->mlx, g_struct->floor);
-	mlx_delete_image(g_struct->mlx, g_struct->collectible);
-	mlx_delete_image(g_struct->mlx, g_struct->g_exit_img);
-	mlx_delete_image(g_struct->mlx, g_struct->hero.hero_front);
-	mlx_delete_image(g_struct->mlx, g_struct->hero.hero_back);
-	mlx_delete_image(g_struct->mlx, g_struct->hero.hero_right);
-	mlx_delete_image(g_struct->mlx, g_struct->hero.hero_left);
+	if (g_struct->initialised)
+	{
+		delete_textures(g_struct);
+		delete_images(g_struct);
+	}
 }
