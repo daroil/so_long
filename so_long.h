@@ -6,7 +6,7 @@
 /*   By: dhendzel <dhendzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 16:26:58 by dhendzel          #+#    #+#             */
-/*   Updated: 2022/12/19 19:35:34 by dhendzel         ###   ########.fr       */
+/*   Updated: 2022/12/20 16:45:29 by dhendzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ typedef struct game_s
 	int				exit_open;
 	int				collected;
 	int				all_collectibles;
+	int				initialised;
+	int				dfs;
 }	t_game;
 
 void	ft_render_map(t_game *g_struct);

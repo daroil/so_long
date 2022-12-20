@@ -6,7 +6,7 @@
 /*   By: dhendzel <dhendzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 22:02:33 by dhendzel          #+#    #+#             */
-/*   Updated: 2022/12/20 14:15:36 by dhendzel         ###   ########.fr       */
+/*   Updated: 2022/12/20 16:45:48 by dhendzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,4 +124,5 @@ void	ft_initialise_graphics(t_game *g_struct)
 			g_struct->texture);
 	g_struct->g_exit_img = mlx_texture_to_image(g_struct->mlx,
 			g_struct->exit_texture);
+	g_struct->initialised = 1;
 }
