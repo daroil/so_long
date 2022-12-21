@@ -6,7 +6,7 @@
 /*   By: dhendzel <dhendzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 22:08:03 by dhendzel          #+#    #+#             */
-/*   Updated: 2022/12/20 15:36:38 by dhendzel         ###   ########.fr       */
+/*   Updated: 2022/12/21 02:31:31 by dhendzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	ft_check_map(char *path, t_game *g_struct)
 		{
 			if (player_check(g_struct->map))
 			{	
-				if (coll_check_wrong(g_struct->map))
+				if (coll_check_wrong(g_struct->map) || g_struct->height >= 33)
 					return (0);
 				ft_copy_array(path, g_struct);
 				g_struct->dfs = 1;
