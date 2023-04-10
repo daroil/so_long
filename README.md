@@ -1,5 +1,5 @@
 # so_long
-It's a very simple game written in C language as a part of 42 Heilbronn core curriculum. 
+It's a game written in C language as a part of 42 Heilbronn core curriculum. 
 To launch the game you have to install brew and glfw at first.
 
 If you have brew you can do so by simply typing "make install" in a terminal.
