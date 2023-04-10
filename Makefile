@@ -14,22 +14,26 @@ CC = gcc
 
 SRCS = 			main.c initialise.c movement.c movement_2.c make_map.c \
 				map_check.c map_check_2.c game_checks.c
-BONUS_SRCS = 	main_bonus.c movement_bonus.c movement_2_bonus.c make_map_bonus.c \
-				map_check_bonus.c map_check_2_bonus.c game_checks_bonus.c \
-				initialise_bonus.c enemy_handle_bonus.c enemy_movement_bonus.c \
-				enemy_movement_bonus_2.c delete_bonus.c
+BONUS_SRCS = 	main_bonus movement_bonus movement_2_bonus make_map_bonus \
+				map_check_bonus map_check_2_bonus game_checks_bonus \
+				initialise_bonus enemy_handle_bonus enemy_movement_bonus \
+				enemy_movement_bonus_2 delete_bonus
 
 BONUS_NAME =  so_long_bonus
 NAME =  so_long
-OBJ	= $(SRCS:.c=.o)
-BONUS_OBJ	= $(BONUS_SRCS:.c=.o)
+# OBJ	= $(SRCS:.c=.o)
+OBJ = $(MAND_FIL:.c=.o)
+BONUS_OBJ	= $(MAND_FIL:.c=.o)
+
+MAND_FIL = $(addsuffix .c, $(addprefix bonus/, $(BONUS_SRCS))) \
+
 CFLAGS = -Wall -Werror -Wextra
 LIBMLX	:= ./lib/MLX42
 LIBFT	:= ./lib/libft
 PRINTF	:= ./lib/printf
 GNL	:= ./lib/gnl
 
-all: libmlx libft printf gnl $(NAME)
+all: libmlx libft printf gnl $(BONUS_NAME)
 
 bonus: libmlx libft printf gnl $(BONUS_NAME)
 
@@ -46,10 +50,13 @@ gnl:
 	@$(MAKE) -C $(GNL)
 
 $(NAME): $(OBJ)
-	$(CC) $(OBJ) $(LIBMLX)/libmlx42.a $(PRINTF)/libftprintf.a $(LIBFT)/libft.a $(GNL)/gnl.a -I include -lglfw -L "/Users/$(USER)/.brew/opt/glfw/lib/" -o $(NAME)
+	$(CC) $(OBJ) $(LIBMLX)/libmlx42.a $(PRINTF)/libftprintf.a $(LIBFT)/libft.a $(GNL)/gnl.a -I include -lglfw -L "/home/linuxbrew/.linuxbrew/Cellar/glfw/3.3.8/lib/" -o $(NAME)
+
+$(BONUS_OBJ): %.o : %.c
+	gcc $(CFLAGS) -c -o $@ $<
 
 $(BONUS_NAME): $(BONUS_OBJ)
-	$(CC) $(BONUS_OBJ) $(LIBMLX)/libmlx42.a $(PRINTF)/libftprintf.a $(LIBFT)/libft.a $(GNL)/gnl.a -I include -lglfw -L "/Users/$(USER)/.brew/opt/glfw/lib/" -o $(BONUS_NAME)
+	$(CC) $(BONUS_OBJ) $(LIBMLX)/libmlx42.a $(PRINTF)/libftprintf.a $(LIBFT)/libft.a $(GNL)/gnl.a -I include -lglfw -L "/home/linuxbrew/.linuxbrew/Cellar/glfw/3.3.8/lib" -o $(BONUS_NAME)
 
 clean:
 	rm -f $(OBJ)
@@ -58,7 +65,7 @@ clean:
 	@$(MAKE) -C $(PRINTF) clean
 	@$(MAKE) -C $(GNL) clean
 
-fclean: clean
+fclean: clean fclean_bonus
 	rm -f $(NAME)
 	@$(MAKE) -C $(LIBMLX) fclean
 	@$(MAKE) -C $(LIBFT) fclean

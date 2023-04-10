@@ -39,10 +39,10 @@ bonus: $(BONUS_OBJ)
 clean:
 	rm -f $(OBJ) $(BONUS_OBJ)
 
-norm:
-	norminette $(SRCS) $(BONUS)
+# norm:
+# 	norminette $(SRCS) $(BONUS)
 
 fclean: clean
 	rm -f $(NAME)
 
-re: fclean clean all bonus norm
+re: fclean clean all BONUS

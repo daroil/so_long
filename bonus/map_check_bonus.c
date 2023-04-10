@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long_bonus.h"
+#include "../so_long_bonus.h"
 
 size_t	ft_strlen_nonl(const char *s)
 {
@@ -85,7 +85,7 @@ int	ft_map_closed_walls(char **map)
 void	ft_copy_array(char *path, t_game *g_struct)
 {
 	int		fd;
-	int		width;
+	// int		width;
 	int		height;
 	char	*line;
 
@@ -93,7 +93,7 @@ void	ft_copy_array(char *path, t_game *g_struct)
 	g_struct->visited = malloc (sizeof(char *) * ft_count_height(path) + 1);
 	fd = open(path, 'r');
 	line = get_next_line(fd);
-	width = ft_strlen(line);
+	// width = ft_strlen(line);
 	if (!g_struct->visited)
 		free(g_struct->visited);
 	while (line)

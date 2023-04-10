@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long_bonus.h"
+#include "../so_long_bonus.h"
 
 int	enemy_is_at_exit(int x, int y, int enemy_x, int enemy_y)
 {

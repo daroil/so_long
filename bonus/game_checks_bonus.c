@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   game_checks.c                                      :+:      :+:    :+:   */
+/*   game_checks_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dhendzel <dhendzel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 22:15:36 by dhendzel          #+#    #+#             */
-/*   Updated: 2022/12/19 19:10:02 by dhendzel         ###   ########.fr       */
+/*   Updated: 2022/12/19 19:14:01 by dhendzel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../so_long_bonus.h"
 
 int	hit_an_exit(int x, int y, t_game *g_struct)
 {
@@ -28,6 +28,19 @@ int	is_at_exit(int x, int y, t_game *g_struct)
 		return (1);
 	return (0);
 }
+
+// void	free_map(t_game *g_struct)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (g_struct->map[i])
+// 	{
+// 		free (g_struct->map[i]);
+// 		i++;
+// 	}
+// 	free (g_struct->map);
+// }
 
 int	player_check(char **map)
 {
